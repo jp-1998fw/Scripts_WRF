@@ -21,8 +21,7 @@ datapath = "/nfs/data/need3104/"
 
 # %% Imports
 from netCDF4 import Dataset
-from wrf import (getvar, to_np, vertcross, smooth2d, CoordPair, GeoBounds,
-                 get_cartopy, latlon_coords, cartopy_xlim, cartopy_ylim, interplevel)
+import wrf 
 import pandas as pd 
 import numpy as np 
 import os 
@@ -30,10 +29,12 @@ import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
 
 
-# %% Main
+# %% Read wrf file
+
+ptf = "/gss/work/need3104/JOHANNES/WRF_XWAKES_180216/WRF_WT_on/"
 
 # ncfile = Dataset(r"Y:\wrfout1.nc")
-ncfile2 = Dataset(r"wrfout_d03_2018-02-16_18-00-00")
+wrfin = Dataset(ptf + "/wrfout_d03_2018-02-16_18-00-00")
 
 # Get the WRF variables
 
@@ -41,14 +42,18 @@ ncfile2 = Dataset(r"wrfout_d03_2018-02-16_18-00-00")
 # wspd =  getvar(ncfile, "wspd_wdir", units="kt")[0,:]
 # wspd_125m = interplevel(wspd, z, 125)
 
-z2 = getvar(ncfile2, "z")
-wspd2 =  getvar(ncfile2, "wspd_wdir", units="kt")[0,:]
-wspd_125m2 = interplevel(wspd2, z2, 125)
 
+# %% Plot wind speed
 
+# Extract the wind speed data for a specific time and height level
+time_index = 0 # Set the time index to the first time step
+height_index = wrf.getvar(wrfin, "height_agl").argmin(dim='bottom_top') # Set the height index to the lowest level
+u, v = wrf.getvar(wrfin, "uvmet_wspd_wdir", timeidx=time_index)
+wind_speed = wrf.getvar(wrfin, "wspd_wdir", timeidx=time_index)[height_index,:]
 
-# plt.scatter(wspd_125m.XLONG, wspd_125m.XLAT, c=wspd_125m)
-# plt.show()
-
-plt.scatter(wspd_125m2.XLONG, wspd_125m2.XLAT, c=wspd_125m2)
+# Create a plot of the wind speed
+plt.plot(wind_speed)
+plt.title('Wind Speed at Time Index {} and Height Level {}'.format(time_index, height_index))
+plt.xlabel('X Position')
+plt.ylabel('Y Position')
 plt.show()
