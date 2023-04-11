@@ -31,10 +31,12 @@ from matplotlib.cm import get_cmap
 
 # %% Read wrf file
 
-ptf = "/user/need3104/run1/"
+# ptf = "/user/need3104/run1/"
+
+ptf = "/gss/work/need3104/JOHANNES/WRF_XWAKES_180216/WRF_WT_on/"
 
 # ncfile = Dataset(r"Y:\wrfout1.nc")
-wrfin = Dataset(ptf + "wrfout_d03_2018-02-16_18-00-00")
+wrfin = Dataset(ptf + "wrfout_d03_2018-02-15_06:00:00")
 
 # Get the WRF variables
 
@@ -73,9 +75,10 @@ wspd_interp = wrf.interplevel(wspd, z, height)
 # plt.show()
 
 plt.scatter(wspd_interp.XLONG, wspd_interp.XLAT, 
-            c=wspd_interp, vmin=0, vmax=15)
-plt.xlim([5,10])
-plt.ylim([54.5, 55.5])
+            c=wspd_interp)
+# plt.xlim([5,10])
+# plt.ylim([54.5, 55.5])
 plt.colorbar()
 plt.show()
+
 
