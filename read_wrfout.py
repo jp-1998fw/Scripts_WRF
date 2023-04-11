@@ -28,8 +28,7 @@ import numpy as np
 import os 
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
-import cartopy.crs as crs
-import cartopy.feature as cfeature
+
 
 # %% Main
 
