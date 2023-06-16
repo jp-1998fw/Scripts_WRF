@@ -21,17 +21,19 @@ datapath = "Z://"
 
 # %% Imports
 from netCDF4 import Dataset
-from wrf import (getvar, to_np, vertcross, smooth2d, CoordPair, GeoBounds,
-                 get_cartopy, latlon_coords, cartopy_xlim, cartopy_ylim, interplevel)
+import wrf 
 import pandas as pd 
 import numpy as np 
 import os 
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
-import cartopy.crs as crs
-import cartopy.feature as cfeature
 
-# %% Main
+
+# %% Read wrf file
+
+# ptf = "/user/need3104/run1/"
+
+ptf = "/gss/work/need3104/JOHANNES/WRF_XWAKES_180216/WRF_WT_on/"
 
 os.chdir(homepath)
 
@@ -72,7 +74,3 @@ plt.xlabel("Longitude / °")
 plt.ylabel("Latitude / °")
 plt.colorbar()
 plt.show()
-
-
-
-# %%
